@@ -13,6 +13,12 @@ from models import db
 app = Flask(__name__)
 
 
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.pop('userid', None)
+    return redirect('/')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -36,7 +42,7 @@ def register():
         db.session.commit()
         return redirect('/')
 
-    return render_template('register.html', form = form)
+    return render_template('register.html', form=form)
 
 
 @app.route('/')
